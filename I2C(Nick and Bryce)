@@ -1,0 +1,768 @@
+#include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/i2c1_master.h"
+#include "mcc_generated_files/examples/i2c1_master_example.h"
+/*
+                         Main application
+ */
+//void I2C1_Write1ByteRegister(i2c1_address_t address, uint8_t reg, uint8_t data);
+uint16_t test=1;
+int counter=0;
+double temp=95.0;
+void main(void)
+{
+    // Initialize the device
+    SYSTEM_Initialize();
+    I2C1_Initialize();
+    // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
+    // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global and Peripheral Interrupts
+    // Use the following macros to:
+
+    // Enable the Global Interrupts
+    //INTERRUPT_GlobalInterruptEnable();
+
+    // Disable the Global Interrupts
+    //INTERRUPT_GlobalInterruptDisable();
+
+    // Enable the Peripheral Interrupts
+    //INTERRUPT_PeripheralInterruptEnable();
+
+    // Disable the Peripheral Interrupts
+    //INTERRUPT_PeripheralInterruptDisable();
+    
+    //I2C1_Write1ByteRegister(0b0111001, 0x07, 0b00000001);
+    I2C1_Write1ByteRegister(0b0111001, 0x02, 0x23);
+    //changes the brightness(intensity to 30/64)   
+    while (1)
+    {
+        /*counter++;
+        //I2C1_WriteNBytes(0b0111001, &data, 2);
+        //I2C1_ReadNBytes(0b0111001, &data, 2);
+        //test=I2C1_Read1ByteRegister(0b0111001, 0x02);
+        //test=I2C1_Read1ByteRegister(0b0111001, 0x21);
+        LED_0_Toggle();
+        __delay_ms(400);
+        I2C1_Write1ByteRegister(0b0111001, 0x07, 00000111);
+        __delay_ms(400);
+        I2C1_Write1ByteRegister(0b0111001, 0x20, 0xff);
+        __delay_ms(400);
+        I2C1_Write1ByteRegister(0b0111001, 0x21, 0xff);
+        __delay_ms(400);
+        I2C1_Write1ByteRegister(0b0111001, 0x22, 0xff);
+        __delay_ms(400);
+        I2C1_Write1ByteRegister(0b0111001, 0x23, 0xff);
+         */
+        //
+        
+        if(temp<90){
+        //write "LOW", data might need extra 0 on left side to work
+            I2C1_Write1ByteRegister(0b0111001,  0x20, 0b00001110);
+            I2C1_Write1ByteRegister(0b0111001,  0x21, 0b01111110); 
+            I2C1_Write1ByteRegister(0b0111001, 0x22, 0b000011110);
+            I2C1_Write1ByteRegister(0b0111001, 0x23, 0b00111100);
+        }
+        else if(temp<100){
+            //digit 0 = blank
+            I2C1_Write1ByteRegister(0b0111001,  0x20, 0b0000000);
+            //digit 1 = 9
+            I2C1_Write1ByteRegister(0b0111001,  0x21, 0b01111011); 
+        }
+       if(90<temp<91){
+         //digit 2 = 0
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b00000000);
+          if(90.0<temp<90.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b00110000);
+           }
+           else if(90.1<temp<90.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01101101);  
+           }
+           else if(90.2<temp<90.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01111001);
+           }
+           else if(90.3<temp<90.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b00110011);
+           }
+           else if(90.4<temp<90.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01011011);
+           }
+           else if(90.5<temp<90.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01011111);
+           }
+           else if(90.6<temp<90.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01110000);
+           }
+           else if(90.7<temp<90.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01111011);
+           }
+       }
+       else if(90<temp<92){
+         //digit 2 = 1
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b00110000);
+           if(91.0<temp<91.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b00110000);
+           }
+           else if(91.1<temp<91.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01101101);  
+           }
+           else if(91.2<temp<91.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01111001);
+           }
+           else if(91.3<temp<91.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b00110011);
+           }
+           else if(91.4<temp<91.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01011011);
+           }
+           else if(91.5<temp<91.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01011111);
+           }
+           else if(91.6<temp<91.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01110000);
+           }
+           else if(91.7<temp<91.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b01111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(91<temp<93){
+         //digit 2 = 2
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1101101);
+           if(92.0<temp<92.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(92.1<temp<92.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(92.2<temp<92.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(92.3<temp<92.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(92.4<temp<92.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(92.5<temp<92.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(92.6<temp<92.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(92.7<temp<92.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(92<temp<94){
+         //digit 2 = 3
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111001);
+           if(93.0<temp<93.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(93.1<temp<93.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(93.2<temp<93.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(93.3<temp<93.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(93.4<temp<93.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(93.5<temp<93.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(93.6<temp<93.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(93.7<temp<93.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(93<temp<95){
+         //digit 2 = 4
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b0110011);
+           if(94.0<temp<94.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(94.1<temp<94.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(94.2<temp<94.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(94.3<temp<94.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(94.4<temp<94.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(94.5<temp<94.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(94.6<temp<94.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(94.7<temp<94.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(94<temp<96){
+         //digit 2 = 5
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1011011);
+           if(95.0<temp<95.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(95.1<temp<95.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(95.2<temp<95.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(95.3<temp<95.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(95.4<temp<95.6){
+         //digit 3 = 5
+          I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(95.5<temp<95.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(95.6<temp<95.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(95.7<temp<95.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+        else if(95<temp<97){
+         //digit 2 = 6
+        I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1011111);
+          if(96.0<temp<96.2){
+          //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(96.1<temp<96.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(96.2<temp<96.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(96.3<temp<96.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(96.4<temp<96.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(96.5<temp<96.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(96.6<temp<96.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(96.7<temp<96.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(96<temp<98){
+         //digit 2 = 7
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1110000);
+           if(97.0<temp<97.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(97.1<temp<97.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(97.2<temp<97.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(97.3<temp<97.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(97.4<temp<97.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(97.5<temp<97.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(97.6<temp<97.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(97.7<temp<97.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(97<temp<99){
+         //digit 2 = 8
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111111);
+           if(98.0<temp<98.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(98.1<temp<98.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(98.2<temp<98.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(98.3<temp<98.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(98.4<temp<98.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(98.5<temp<98.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(98.6<temp<98.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(98.7<temp<98.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       else if(98<temp<100){
+         //digit 2 = 9
+         I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111011);
+           if(99.0<temp<99.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+           else if(99.1<temp<99.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+           else if(99.2<temp<99.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+           else if(99.3<temp<99.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+           else if(99.4<temp<99.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+           else if(99.5<temp<99.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+           else if(99.6<temp<99.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+           else if(99.7<temp<99.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+           else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+  else if(temp<107){
+       //dig 0 = 1, dig 1 = 0
+       I2C1_Write1ByteRegister(0b0111001, 0x20, 0b0110000);
+       I2C1_Write1ByteRegister(0b0111001, 0x21, 0b1111110);
+    if(99.9<temp<101){
+        //dig 2=0
+        I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111110);
+  
+        if(100<temp<100.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(100.1<temp<100.3){
+               //digit 3 = 2
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(100.2<temp<100.4){
+               //digit 3 = 3
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(100.3<temp<100.5){
+               //digit 3 = 4
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(100.4<temp<100.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(100.5<temp<100.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(100.6<temp<100.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(100.7<temp<100.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else{
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       
+    if(100.9<temp<102){
+        //dig 2=1
+        I2C1_Write1ByteRegister(0b0111001, 0x22, 0b0110000);
+        if(101<temp<101.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(101.1<temp<101.3){
+               //digit 3 = 2
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(101.2<temp<101.4){
+               //digit 3 = 3
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(101.3<temp<101.5){
+               //digit 3 = 4
+               I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(101.4<temp<101.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(101.5<temp<101.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(101.6<temp<101.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(101.7<temp<101.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else{
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+  
+       if(101.9<temp<103){
+           //dig 2=2
+           I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1101101);
+        if(102<temp<102.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(102.1<temp<102.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(102.2<temp<102.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(102.3<temp<102.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(102.4<temp<102.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(102.5<temp<102.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(102.6<temp<102.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(102.7<temp<102.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       if(102.9<temp<104){
+           //dig 2=3
+           I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111001);
+       if(103<temp<103.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+       else if(103.1<temp<103.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+       else if(103.2<temp<103.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(103.3<temp<103.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(103.4<temp<103.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(103.5<temp<103.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(103.6<temp<103.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(103.7<temp<103.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+    if(103.9<temp<105){
+           //dig 2=4
+           I2C1_Write1ByteRegister(0b0111001, 0x22, 0b0110011);
+        if(104<temp<104.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(104.1<temp<104.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(104.2<temp<104.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(104.3<temp<104.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(104.4<temp<104.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(104.5<temp<104.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(104.6<temp<104.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(104.7<temp<104.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+       if(104.9<temp<106){
+           //dig 2=5
+           I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1011011);
+           if(105<temp<105.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(105.1<temp<105.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(105.2<temp<105.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(105.3<temp<105.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(105.4<temp<105.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(105.5<temp<105.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(105.6<temp<105.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(105.7<temp<105.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else {
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+    if(105.9<temp<107){
+           //dig 2=6
+           I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1011111);
+        if(106<temp<106.2){
+           //digit 3 = 1
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110000);
+           }
+        else if(106.1<temp<106.3){
+           //digit 3 = 2
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1101101);  
+           }
+        else if(106.2<temp<106.4){
+           //digit 3 = 3
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111001);
+           }
+        else if(106.3<temp<106.5){
+           //digit 3 = 4
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110011);
+           }
+        else if(106.4<temp<106.6){
+           //digit 3 = 5
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011011);
+           }
+        else if(106.5<temp<106.7){
+           //digit 3 = 6
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1011111);
+           }
+        else if(106.6<temp<106.8){
+           //digit 3 = 7
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1110000);
+           }
+        else if(106.7<temp<106.9){
+           //digit 3 = 8
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111111);
+           }
+        else{
+           //digit 3 = 9
+           I2C1_Write1ByteRegister(0b0111001, 0x23, 0b1111011);
+           }
+       }
+   }
+    else if (temp>106.99){
+        //write HIGH
+        I2C1_Write1ByteRegister(0b0111001, 0x20, 0b0110111); //H
+        I2C1_Write1ByteRegister(0b0111001, 0x21, 0b0110000);//I
+        I2C1_Write1ByteRegister(0b0111001, 0x22, 0b1111011);//g
+        I2C1_Write1ByteRegister(0b0111001, 0x23, 0b0110111);//H
+    }
+    }
+}
+/**
+ End of File
+*/
