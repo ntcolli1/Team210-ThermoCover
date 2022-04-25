@@ -1,0 +1,38 @@
+
+#include "mcc_generated_files/mcc.h"
+
+uint16_t volatile adcVal; 
+
+/*
+                         Main application
+ */
+void main(void)
+{
+
+
+    SYSTEM_Initialize();
+    ADCC_DischargeSampleCapacitor();
+    adcVal = ADCC_GetSingleConversion(PS);
+   
+    while (1)
+    {
+
+    {
+        // Add your application code
+
+        if (ADCC_GetSingleConversion(PS) > 0)
+            {
+            LED_SetHigh();
+            }
+        else
+            {
+            LED_SetLow();
+            }
+
+    }
+		}
+    }
+
+/**
+ End of File
+*/
